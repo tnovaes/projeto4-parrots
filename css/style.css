@@ -31,7 +31,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin:0 auto;
+  margin:0 90px;
 
 
 }
@@ -40,7 +40,8 @@ h1 {
   width: 117px;
   height: 146px;
   position: relative;
-  margin-left: 34px;
+  margin-left: 17px;
+  margin-right:17px;
   margin-bottom: 34px;
 }
 
@@ -69,6 +70,12 @@ img {
   height: 100px;
 }
 
+@media (max-width:950px){
+  .container{
+    margin: 0 30px;
+  }
+}
+
 @media (max-width: 540px){
   h1{
     font-size:46px;
@@ -82,5 +89,6 @@ img {
   }
   .card{
     margin-left:0px;
+    margin-right:0px;
   }
 }
