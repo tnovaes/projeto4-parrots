@@ -1,18 +1,15 @@
 let count = 0;
 let nCards = 0;
 let deck = [];
-
-
-function turnCard(card) {
-    card.firstElementChild.classList.add("back-face");
-    card.lastElementChild.classList.remove("back-face");
-}
+let firstCard;
+let points = 0;
 
 function start() {
     nCards = Number(prompt("Quantas cartas terão no jogo?"));
     while (!(nCards % 2 === 0 && nCards >= 4 && nCards <= 14)) {
         nCards = prompt("Só é permitido números pares entre 4 e 14!")
     }
+    displayCards(nCards);
 }
 
 function displayCards(nCards) {
@@ -20,11 +17,10 @@ function displayCards(nCards) {
         deck.push(i);
         deck.push(i);
     }
+
     deck.sort(compare);
-    console.log(deck);
-    console.log(deck.length);
-    for(let i = (deck.length - 1); i >= 0; i--){
-        console.log(deck[i]);
+
+    for (let i = (deck.length - 1); i >= 0; i--) {
         document.querySelector(".container").innerHTML += `
             <div class="card" onclick="turnCard(this)">
                 <div class="face">
@@ -41,5 +37,40 @@ function compare() {
     return Math.random() - 0.5;
 }
 
+function turnCard(card) {
+    card.firstElementChild.classList.add("back-face");
+    card.lastElementChild.classList.remove("back-face");
+
+    if (count === 0) {
+        firstCard = card;
+        count++;
+    }
+    
+    if (firstCard !== card) {
+        if (count % 2 === 0) {
+            if (card.innerHTML === firstCard.innerHTML) {
+                card.removeAttribute("onclick");
+                firstCard.removeAttribute("onclick");
+                points++;
+            }
+            else {
+                setTimeout(turnBack, 1000, card);
+                setTimeout(turnBack, 1000, firstCard);
+            }
+        }
+    }
+    firstCard = card;
+
+    count++;
+
+    if(points === nCards/2){
+        alert("Você ganhou em " + count + " jogadas!")
+    }
+}
+
+function turnBack(card) {
+    card.firstElementChild.classList.remove("back-face");
+    card.lastElementChild.classList.add("back-face");
+}
+
 start();
-displayCards(nCards);
