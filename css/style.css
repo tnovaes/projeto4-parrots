@@ -18,7 +18,7 @@ header {
 
 h1 {
   color: #75B79E;
-  
+
   font-size: 56px;
   font-weight: 700;
   line-height: 66px;
@@ -31,7 +31,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin:0 90px;
+  margin: 0 90px;
 
 
 }
@@ -41,7 +41,7 @@ h1 {
   height: 146px;
   position: relative;
   margin-left: 17px;
-  margin-right:17px;
+  margin-right: 17px;
   margin-bottom: 34px;
 }
 
@@ -70,43 +70,49 @@ img {
   height: 100px;
 }
 
-.timer{
+.timer {
   font-size: 36px;
   font-weight: 700;
   line-height: 42px;
   letter-spacing: -0.004em;
-  color:#86BD8D;
+  color: #86BD8D;
 
-  position:fixed;
-  top:15px;
-  right:25px;
+  position: fixed;
+  top: 15px;
+  right: 25px;
 }
 
-@media (max-width:950px){
-  .container{
+.stop-click{
+  pointer-events: none;
+}
+
+@media (max-width:950px) {
+  .container {
     margin: 0 30px;
   }
 }
 
-@media (max-width:660px){
-  .timer{
+@media (max-width:660px) {
+  .timer {
     top: 120px;
   }
 }
 
-@media (max-width: 540px){
-  h1{
-    font-size:46px;
+@media (max-width: 540px) {
+  h1 {
+    font-size: 46px;
     line-height: 42px;
     text-align: center;
-    margin-bottom:37px;
+    margin-bottom: 37px;
   }
-  .container{
+
+  .container {
     flex-direction: column;
     align-items: center;
   }
-  .card{
-    margin-left:0px;
-    margin-right:0px;
+
+  .card {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }

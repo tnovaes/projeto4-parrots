@@ -5,6 +5,7 @@ let firstCard;
 let points = 0;
 let time = 0;
 let idInterval;
+let click = true;
 
 function start() {
     nCards = Number(prompt("Quantas cartas terão no jogo?"));
@@ -41,41 +42,49 @@ function compare() {
 }
 
 function turnCard(card) {
-    card.firstElementChild.classList.add("back-face");
-    card.lastElementChild.classList.remove("back-face");
+    if (click === true) {
+        card.firstElementChild.classList.add("back-face");
+        card.lastElementChild.classList.remove("back-face");
 
-    if (count === 0) {
-        firstCard = card;  
-    }
-    
-    if (firstCard !== card) {
-        if (count % 2 !== 0) {
-            if (card.innerHTML === firstCard.innerHTML) {
-                card.removeAttribute("onclick");
-                firstCard.removeAttribute("onclick");
-                points++;
-            }
-            else {
-                setTimeout(turnBack, 1000, card);
-                setTimeout(turnBack, 1000, firstCard);
+        if (count === 0) {
+            firstCard = card;
+        }
+
+        if (firstCard !== card) {
+
+            if (count % 2 !== 0) {
+                if (card.innerHTML === firstCard.innerHTML) {
+                    card.removeAttribute("onclick");
+                    firstCard.removeAttribute("onclick");
+                    points++;
+
+                }
+                else {
+                    click = false;
+                    setTimeout(turnBack, 1000, card);
+                    setTimeout(turnBack, 1000, firstCard);
+
+                }
+
             }
         }
-    }
-    
-    firstCard = card;
 
-    count++;
+        firstCard = card;
 
-    if(points === nCards/2){
-        alert("Você ganhou em " + count + " jogadas! A duração do jogo foi de "+ time +" segundos!");
-        let restart;
-        while(restart !== "não"){
-            restart = prompt("Você deseja jogar novamente? (Digite 'sim' ou 'não')");
-            if(restart === "sim"){
-                clearInterval(idInterval);
-                location.reload();
+        count++;
+        console.log(count);
+
+        if (points === nCards / 2) {
+            alert("Você ganhou em " + count + " jogadas! A duração do jogo foi de " + time + " segundos!");
+            let restart;
+            while (restart !== "não") {
+                restart = prompt("Você deseja jogar novamente? (Digite 'sim' ou 'não')");
+                if (restart === "sim") {
+                    clearInterval(idInterval);
+                    location.reload();
+                }
+
             }
-
         }
     }
 }
@@ -83,10 +92,11 @@ function turnCard(card) {
 function turnBack(card) {
     card.firstElementChild.classList.remove("back-face");
     card.lastElementChild.classList.add("back-face");
+    click = true;
 }
 
-function clock(){
-    time ++;
+function clock() {
+    time++;
     document.querySelector('.timer').innerHTML = time;
 }
 
