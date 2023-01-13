@@ -3,6 +3,8 @@ let nCards = 0;
 let deck = [];
 let firstCard;
 let points = 0;
+let time = 0;
+let idInterval;
 
 function start() {
     nCards = Number(prompt("Quantas cartas terão no jogo?"));
@@ -10,6 +12,7 @@ function start() {
         nCards = prompt("Só é permitido números pares entre 4 e 14!")
     }
     displayCards(nCards);
+    idInterval = setInterval(clock, 1000);
 }
 
 function displayCards(nCards) {
@@ -22,12 +25,12 @@ function displayCards(nCards) {
 
     for (let i = (deck.length - 1); i >= 0; i--) {
         document.querySelector(".container").innerHTML += `
-            <div class="card" onclick="turnCard(this)">
+            <div data-test="card" class="card" onclick="turnCard(this)">
                 <div class="face">
-                    <img src="./imagens/back.png" alt="Verso da Carta">
+                    <img data-test="face-down-image" src="./imagens/back.png" alt="Verso da Carta">
                 </div>
                 <div class="back-face face">
-                    <img src="./imagens/carta${deck[i]}.gif" alt="Frente da Carta">
+                    <img data-test="face-up-image" src="./imagens/carta${deck[i]}.gif" alt="Frente da Carta">
                 </div>
             </div>`;
     }
@@ -42,12 +45,11 @@ function turnCard(card) {
     card.lastElementChild.classList.remove("back-face");
 
     if (count === 0) {
-        firstCard = card;
-        count++;
+        firstCard = card;  
     }
     
     if (firstCard !== card) {
-        if (count % 2 === 0) {
+        if (count % 2 !== 0) {
             if (card.innerHTML === firstCard.innerHTML) {
                 card.removeAttribute("onclick");
                 firstCard.removeAttribute("onclick");
@@ -59,18 +61,33 @@ function turnCard(card) {
             }
         }
     }
+    
     firstCard = card;
 
     count++;
 
     if(points === nCards/2){
-        alert("Você ganhou em " + count + " jogadas!")
+        alert("Você ganhou em " + count + " jogadas! A duração do jogo foi de "+ time +" segundos!");
+        let restart;
+        while(restart !== "não"){
+            restart = prompt("Você deseja jogar novamente? (Digite 'sim' ou 'não')");
+            if(restart === "sim"){
+                clearInterval(idInterval);
+                location.reload();
+            }
+
+        }
     }
 }
 
 function turnBack(card) {
     card.firstElementChild.classList.remove("back-face");
     card.lastElementChild.classList.add("back-face");
+}
+
+function clock(){
+    time ++;
+    document.querySelector('.timer').innerHTML = time;
 }
 
 start();
